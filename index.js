@@ -1,38 +1,46 @@
 'use strict';
 
-const Hapi = require('@hapi/hapi');
+// const Hapi = require('@hapi/hapi');
 
-const init = async () => {
+// const init = async () => {
 
-  const server = Hapi.server({
-    port: 3000,
-    host: 'localhost'
-  });
+//   const server = Hapi.server({
+//     port: 3000,
+//     host: 'localhost'
+//   });
 
-  server.ext('onRequest', function (request, reply) {
-    console.log("received request", request.method, request.path);
-    return reply.continue;
-    // return true;
-  });
+//   server.ext('onRequest', function (request, reply) {
+//     console.log("received request", request.method, request.path);
+//     return reply.continue;
+//     // return true;
+//   });
 
-  await server.register({
-    plugin: require('./plugins/fx'),
-    options: {
-      name: 'Gaunt'
-    },
-    routes: {
-      prefix: '/fx'
-    }
-  });
+//   await server.register({
+//     plugin: require('./plugins/fx'),
+//     options: {
+//       name: 'Gaunt'
+//     },
+//     routes: {
+//       prefix: '/fx'
+//     }
+//   });
 
-  await server.start();
-  console.log('Server running on %s', server.info.uri);
-};
+//   await server.start();
+//   console.log('Server running on %s', server.info.uri);
+// };
 
-process.on('unhandledRejection', (err) => {
+// process.on('unhandledRejection', (err) => {
 
-  console.log(err);
-  process.exit(1);
-});
+//   console.log(err);
+//   process.exit(1);
+// });
 
-init();
+// init();
+
+const express = require('express');
+const app = express()
+const port = 3000;
+
+app.get('/', (req, res) => res.send('Welcome!'));
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))

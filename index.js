@@ -25,6 +25,13 @@ const init = async () => {
     }
   });
 
+  await server.register({
+    plugin: require('./plugins/rates'),
+    routes: {
+      prefix: '/rates'
+    }
+  });
+
   await server.start();
   console.log('Server running on %s', server.info.uri);
 };

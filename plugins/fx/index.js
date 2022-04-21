@@ -51,12 +51,12 @@ exports.plugin = {
       path: '/updateRates',
       handler: function (request, h) {
         return new Promise((resolve, reject) => {
-          let url = `http://data.fixer.io/api/2013-12-24?access_key=${process.env.fxKey}&base=ARS&symbols=USD,BRL,ARS,EUR`;
+          let url = `http://data.fixer.io/api/2013-12-24?access_key=${process.env.fxKey}&symbols=USD,BRL,ARS,EUR`;
 
           function update(resp) {
             const symbols = ["ARS", "EUR", "BRL", "USD"];
 
-            // console.log(resp, resp.rates);
+            console.log(resp, resp.rates);
 
             const collection = client.db("Hapi").collection("rates");
 
@@ -81,8 +81,6 @@ exports.plugin = {
               });
             });
 
-
-
             Promise.all(promises).then((res) => {
               resolve("All data updated");
             }, (err) => {
@@ -94,16 +92,16 @@ exports.plugin = {
           axios.get(url).then((resp) => {
 
             if (resp.data.success) {
-              update(resp);
+              update(resp.data);
             } else {
-              // console.log("ignored error", resp.data);
+              console.log("error", resp.data);
               // const response = { "success": true, "timestamp": 1650515583, "base": "EUR", "date": "2022-04-21", "rates": { "USD": 1.083377, "BRL": 5.007476, "ARS": 123.45795, "EUR": 1 } }
               // //i ignore api error for now
               // update(response);
               reject(new Error("Error fetching data from fx"));
             }
           }).catch((err) => {
-            // console.log("error", err);
+            console.log("error", err);
             // const response = { "success": true, "timestamp": 1650515583, "base": "EUR", "date": "2022-04-21", "rates": { "USD": 1.083377, "BRL": 5.007476, "ARS": 123.45795, "EUR": 1 } }
             // //i ignore api error for now
             // update(response);

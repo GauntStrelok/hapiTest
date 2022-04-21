@@ -9,6 +9,12 @@ const init = async () => {
     host: 'localhost'
   });
 
+  server.ext('onRequest', function (request, reply) {
+    console.log("received request", request.method, request.path);
+    return reply.continue;
+    // return true;
+  });
+
   await server.register({
     plugin: require('./plugins/fx'),
     options: {

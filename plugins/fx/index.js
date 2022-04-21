@@ -87,7 +87,7 @@ exports.plugin = {
               resolve("All data updated");
             }, (err) => {
               console.log("error", err);
-              reject({ error: "Error updating data" });
+              reject(new Error("Error updating mongodb data"));
             });
           }
 
@@ -96,16 +96,18 @@ exports.plugin = {
             if (resp.data.success) {
               update(resp);
             } else {
-              console.log("ignored error", resp.data);
-              const response = { "success": true, "timestamp": 1650515583, "base": "EUR", "date": "2022-04-21", "rates": { "USD": 1.083377, "BRL": 5.007476, "ARS": 123.45795, "EUR": 1 } }
-              //i ignore api error for now
-              update(response);
+              // console.log("ignored error", resp.data);
+              // const response = { "success": true, "timestamp": 1650515583, "base": "EUR", "date": "2022-04-21", "rates": { "USD": 1.083377, "BRL": 5.007476, "ARS": 123.45795, "EUR": 1 } }
+              // //i ignore api error for now
+              // update(response);
+              reject(new Error("Error fetching data from fx"));
             }
           }).catch((err) => {
-            console.log("error", err);
-            const response = { "success": true, "timestamp": 1650515583, "base": "EUR", "date": "2022-04-21", "rates": { "USD": 1.083377, "BRL": 5.007476, "ARS": 123.45795, "EUR": 1 } }
-            //i ignore api error for now
-            update(response);
+            // console.log("error", err);
+            // const response = { "success": true, "timestamp": 1650515583, "base": "EUR", "date": "2022-04-21", "rates": { "USD": 1.083377, "BRL": 5.007476, "ARS": 123.45795, "EUR": 1 } }
+            // //i ignore api error for now
+            // update(response);
+            reject(err);
           })
         });
       }

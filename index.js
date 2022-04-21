@@ -1,6 +1,7 @@
 'use strict';
 
 const Hapi = require('@hapi/hapi');
+require('dotenv').config();
 
 const init = async () => {
 

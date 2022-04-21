@@ -51,7 +51,7 @@ exports.plugin = {
       path: '/updateRates',
       handler: function (request, h) {
         return new Promise((resolve, reject) => {
-          let url = `http://data.fixer.io/api/2013-12-24?access_key=${process.env.fxKey}&symbols=USD,BRL,ARS,EUR`;
+          let url = `http://data.fixer.io/api/latest?access_key=${process.env.fxKey}&symbols=USD,BRL,ARS,EUR`;
 
           function update(resp) {
             const symbols = ["ARS", "EUR", "BRL", "USD"];
